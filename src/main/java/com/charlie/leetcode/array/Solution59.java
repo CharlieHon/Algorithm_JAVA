@@ -1,4 +1,4 @@
-package com.charlie.leetcode;
+package com.charlie.leetcode.array;
 
 /**
  * 螺旋矩阵Ⅱ

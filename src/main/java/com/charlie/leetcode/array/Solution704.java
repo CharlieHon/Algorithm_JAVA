@@ -1,4 +1,4 @@
-package com.charlie.leetcode;
+package com.charlie.leetcode.array;
 
 /**
  * <h3>二分查找</h3>

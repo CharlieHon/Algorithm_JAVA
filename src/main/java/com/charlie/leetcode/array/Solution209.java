@@ -1,4 +1,4 @@
-package com.charlie.leetcode;
+package com.charlie.leetcode.array;
 
 /**
  * <h3>长度最小的子数组</h3>
