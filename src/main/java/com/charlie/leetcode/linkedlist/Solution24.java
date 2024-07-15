@@ -64,4 +64,23 @@ public class Solution24 {
         return dummy.next;
     }
 
+    /**
+     * <h3>两两交换链表中的节点</h3>
+     * @param head 原链表头节点
+     * @return 两两交换后链表头结点
+     */
+    public ListNode swapPairs_recursion(ListNode head) {
+        // 边界条件，两两交换的前提是至少还剩下倆节点
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode next = head.next;
+        // 递归解决后面节点的交换，并将交换后返回的节点赋值给head
+        head.next = swapPairs_recursion(next.next);
+        // next下一个指向head，将前两个完成交换
+        next.next = head;
+        return next;    // 返回新新头结点
+    }
+
 }
