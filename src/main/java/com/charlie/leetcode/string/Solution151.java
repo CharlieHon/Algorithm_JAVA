@@ -11,63 +11,59 @@ package com.charlie.leetcode.string;
 public class Solution151 {
 
     public static void main(String[] args) {
-        String s = "the sky is blue ";
-        StringBuffer sb1 = removeSpace(s);
-        System.out.println("sb1=>" + sb1 + "<=");
-        String s2 = reverseWords(s);
-        System.out.println("s2=>" + s2 + "<=");
+        String s = " a cute   dog";
+        String reversed = reverseWords(s);
+        System.out.println("reversed=>" + reversed + "<=");
     }
 
     public static String reverseWords(String s) {
-        StringBuffer sb = removeSpace(s);
+        char[] chars = s.toCharArray();
+        // 1. 去除多余空格
+        chars = removeSpace(chars);
+        // 2. 反转整个字符串
+        reverse(chars, 0, chars.length - 1);
+        // 3. 反转每个单词
         int start = 0;
-        for (int j = 0; j < sb.length(); j++) {
-            char c = sb.charAt(j);
-            if (Character.isSpaceChar(c)) {
-                reverseWords(sb, start, j - 1);
-                start = j + 1;
-            } else if (j == sb.length() - 1) {
-                reverseWords(sb, start, j);
+        for (int end = 0; end <= chars.length; end++) {
+            if (end == chars.length || chars[end] == ' ') {
+                reverse(chars, start, end - 1);
+                start = end + 1;
             }
         }
-        reverseWords(sb, 0, sb.length() - 1);
-        return sb.toString();
+        return new String(chars);
     }
 
-    // 去除多余空格
-    public static StringBuffer removeSpace(String s) {
-        // 去除两端空格
-        int start, end;
-        for (start = 0; start < s.length() - 1; start++) {
-            if (!Character.isSpaceChar(s.charAt(start))) {
-                break;
-            }
-        }
-        for (end = s.length() - 1; end >= 0; end--) {
-            if (!Character.isSpaceChar(s.charAt(end))) {
-                break;
-            }
-        }
-
-        StringBuffer sb = new StringBuffer();
-        // 去除中间的空格
-        for (int i = start; i <= end; i++) {
-            if (!Character.isSpaceChar(s.charAt(i)) || (Character.isSpaceChar(s.charAt(i)) && !Character.isSpaceChar(s.charAt(i-1)))) {
-                sb.append(s.charAt(i));
+    // 使用快慢指针移除多余空格
+    public static char[] removeSpace(char[] chars) {
+        int slow = 0;
+        for (int fast = 0; fast < chars.length; fast++) {
+            // 使用fast移除所有空格
+            if (chars[fast] != ' ') {
+                // 单词之间的空格，除了第一个单词外，单词末尾要加空格
+                if (slow != 0) {
+                    chars[slow++] = ' ';
+                }
+                // fast遇到空格或遍历到字符串末尾，就证明遍历完一个单词
+                while (fast < chars.length && chars[fast] != ' ') {
+                    chars[slow++] = chars[fast++];
+                }
             }
         }
 
-        return sb;
+        char[] newChars = new char[slow];
+        System.arraycopy(chars, 0, newChars, 0, slow);
+        return newChars;
     }
 
-    // 反转指定区间的单词
-    public static void reverseWords(StringBuffer sb, int start, int end) {
-        while (start < end) {
-            char c = sb.charAt(start);
-            sb.setCharAt(start, sb.charAt(end));
-            sb.setCharAt(end, c);
-            start++;
-            end--;
+    // 双指针实现指定范围内字符串反转
+    public static void reverse(char[] chars, int left, int right) {
+        while (left < right) {
+            char tmp = chars[left];
+            chars[left] = chars[right];
+            chars[right] = tmp;
+            left++;
+            right--;
         }
     }
+
 }
