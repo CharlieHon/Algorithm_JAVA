@@ -10,6 +10,41 @@ import java.util.Queue;
 public class Solution225 {
 }
 
+/**
+ * 使用单队列模拟栈
+ */
+class MyStack2 {
+
+    private Queue<Integer> q;
+    private int size = 0;
+
+    public MyStack2() {
+        q = new LinkedList<>();
+    }
+
+    public void push(int x) {
+        q.offer(x);
+        for (int i = 0; i < size; i++) {
+            q.offer(q.poll());
+        }
+        size++;
+    }
+
+    public int pop() {
+        size--;
+        return q.poll();
+    }
+
+    public int peek() {
+        return q.peek();
+    }
+
+    public boolean isEmpty() {
+        return q.isEmpty();
+    }
+
+}
+
 class MyStack {
 
     private Queue<Integer> q1;  // 存放与栈相同元素的队列
