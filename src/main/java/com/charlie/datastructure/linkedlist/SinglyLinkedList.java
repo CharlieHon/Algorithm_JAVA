@@ -146,6 +146,22 @@ public class SinglyLinkedList implements Iterable<Integer> { // 整体
         }
     }
 
+    /**
+     * 遍历链表3 - 递归遍历
+     */
+    public void loop3(Consumer<Integer> before, Consumer<Integer> after) {   // 从哪个节点开始遍历
+        recursion(head, before, after);
+    }
+
+    private void recursion(Node curr, Consumer<Integer> before, Consumer<Integer> after) {  // 针对某个节点要进行的操作
+        if (curr == null) {
+            return;
+        }
+        before.accept(curr.value);
+        recursion(curr.next, before, after);
+        after.accept(curr.value);
+    }
+
     @Override
     public Iterator<Integer> iterator() {
         return new NodeIterator();
