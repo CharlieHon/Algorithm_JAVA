@@ -17,6 +17,7 @@ public class Solution121 {
 
         for (int i = 1; i < prices.length; i++) {
             // 第i天持有：   1) i-1天持有 2) i天买入
+            // 注意这里，因为题目要求只能购买一次，所以当第i天持有时余额为 -prices[i]
             dp[i][0] = Math.max(dp[i - 1][0], -prices[i]);
             // 第i天不持有：  1) i-1天不持有 2) i天卖出
             dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + prices[i]);
@@ -36,5 +37,21 @@ public class Solution121 {
         }
 
         return result;
+    }
+
+    /***************  Solution122 可以买卖多次  ******************/
+    public int maxProfit122(int[] prices) {
+        // dp[i][0] 不持有
+        // dp[i][1] 持有
+        int[][] dp = new int[prices.length][2];
+        dp[0][0] = 0;
+        dp[0][1] = -prices[0];
+
+        for (int i = 1; i < prices.length; i++) {
+            dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prices[i]);
+            // 注意这里，第i天持有时，需要包含前几天的利润，因为本题允许多次买卖股票
+            dp[i][1] = Math.max(dp[i - 1][0] - prices[i], dp[i - 1][1]);
+        }
+        return dp[prices.length - 1][0];
     }
 }
