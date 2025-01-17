@@ -6,6 +6,39 @@ package com.charlie.leetcode.array;
 public class Solution59 {
 
     public int[][] generateMatrix(int n) {
+        int[][] res = new int[n][n];
+        int left = 0, right = n - 1;
+        int top = 0, bottom = n - 1;
+        int num = 1, target = n * n;
+        while (num <= target) {
+            // 上
+            for (int i = left; i <= right; i++) {
+                res[top][i] = num++;
+            }
+            top++;
+
+            // 右
+            for (int i = top; i <= bottom; i++) {
+                res[i][right] = num++;
+            }
+            right--;
+
+            // 下
+            for (int i = right; left <= i; i--) {
+                res[bottom][i] = num++;
+            }
+            bottom--;
+
+            // 左
+            for (int i = bottom; top <= i; i--) {
+                res[i][left] = num++;
+            }
+            left++;
+        }
+        return res;
+    }
+
+    public int[][] generateMatrix2(int n) {
         int[][] result = new int[n][n];
         int startX = 0, startY = 0;
         int offset = 1;
