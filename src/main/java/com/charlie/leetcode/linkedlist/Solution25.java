@@ -33,4 +33,24 @@ class Solution25 {
         return dummyNode.next;
     }
 
+    // 递归版
+    public ListNode reverseKGroup2(ListNode head, int k) {
+        ListNode p = head;
+        for (int i = 0; i < k; i++) {
+            if (p == null) return head;
+            p = p.next;
+        }
+
+        ListNode pre = null;
+        ListNode curr = head;
+        ListNode next;
+        for (int i = 0; i < k; i++) {
+            next = curr.next;
+            curr.next = pre;
+            pre = curr;
+            curr = next;
+        }
+        head.next = reverseKGroup2(curr, k);
+        return pre;
+    }
 }
